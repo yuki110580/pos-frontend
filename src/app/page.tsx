@@ -21,7 +21,7 @@ export default function Home() {
     setError('');
     setItem(null);
     try {
-      const res = await fetch(`http://localhost:8000/items/${code}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/items/${code}`);
       if (!res.ok) {
         throw new Error('Fetch error');
       }
@@ -94,7 +94,7 @@ export default function Home() {
               if (cart.length === 0) return;
 
               try {
-                const res = await fetch('http://localhost:8000/purchase', {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/purchase`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
