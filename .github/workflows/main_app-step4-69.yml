@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # This is required for actions/checkout
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -25,11 +25,20 @@ jobs:
           NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
         run: |
           npm install
-          npm run build --if-present
+          npm run build
           npm run test --if-present
 
+      - name: Copy artifact for deployment job
+        run: |
+          mkdir deploy
+          cp -r .next .next_output
+          cp -r .next_output ./deploy
+          cp -r public ./deploy/public
+          cp package.json ./deploy/package.json
+          cp -r node_modules ./deploy/node_modules || true
+
       - name: Zip artifact for deployment
-        run: zip release.zip . -x "node_modules/*" -x ".next/cache/*"
+        run: zip release.zip ./deploy -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -57,7 +66,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'app-step4-69' # ここはあなたの Azure Web App 名
+          app-name: 'app-step4-69'
           slot-name: 'Production'
-          package: . # ← 変更ポイント！プロジェクトルート deploy にする
+          package: ./deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B310A2315943469E81C186B3682FD38E }}
