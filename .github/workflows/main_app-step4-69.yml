@@ -36,12 +36,10 @@ jobs:
       - name: Prepare artifact for deployment
         run: |
           mkdir -p deploy
-          cp -r .next deploy/
+          cp --r .next deploy/
           cp -r public deploy/
-          cp -r src deploy/
           cp package.json deploy/
           cp next.config.js deploy/
-          cp -r node_modules deploy/ || true
 
       - name: Zip artifact for deployment
         run: zip -r release.zip deploy
