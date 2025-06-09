@@ -26,6 +26,7 @@ jobs:
         run: echo "NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}"
 
       - name: npm ci (with devDeps), build, and test
+        working-directory: frontend
         env:
           NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
         run: |
