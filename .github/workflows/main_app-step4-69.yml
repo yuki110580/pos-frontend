@@ -29,10 +29,11 @@ jobs:
 
       - name: Prepare artifact for deploy
         run: |
-          mkdir deploy
-          cp -r .next .next/standalone deploy/.next
-          cp -r public deploy/public
-          cp package.json deploy
+          mkdir -p deploy
+          cp -r .next deploy/
+          cp -r public deploy/
+          cp package.json deploy/
+          cp -r node_modules deploy/ || true
 
       - name: Zip artifact
         run: zip -r release.zip deploy
@@ -65,5 +66,5 @@ jobs:
         with:
           app-name: 'app-step4-69'
           slot-name: 'Production'
-          package: release.zip
+          package: deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B310A2315943469E81C186B3682FD38E }}
