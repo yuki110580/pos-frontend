@@ -9,6 +9,8 @@ type Item = {
 };
 
 export default function Home() {
+  console.log('API endpoint:', process.env.NEXT_PUBLIC_API_ENDPOINT);
+
   const [code, setCode] = useState('');
   const [item, setItem] = useState<Item | null>(null);
   const [error, setError] = useState('');
@@ -159,3 +161,4 @@ export default function Home() {
     </main>
   );
 }
+
