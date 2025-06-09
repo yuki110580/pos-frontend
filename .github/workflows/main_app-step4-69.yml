@@ -34,6 +34,7 @@ jobs:
           cp -r public deploy/
           cp package.json deploy/
           cp -r node_modules deploy/ || true
+          cp next.config.js deploy/
 
       - name: Zip artifact
         run: zip -r release.zip deploy
@@ -68,3 +69,4 @@ jobs:
           slot-name: 'Production'
           package: deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B310A2315943469E81C186B3682FD38E }}
+          startup-command: 'npm start'
