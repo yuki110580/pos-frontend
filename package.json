@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "trigger": "redeploy",
   "scripts": {
     "dev": "next dev",
     "build": "next build --no-lint",
